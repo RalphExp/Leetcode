@@ -1,10 +1,16 @@
+#include <stdio.h>
+
+#include <vector>
+
+using namespace std;
 
 namespace lc {
 
-/* LC: 34 lower bound returns the first index whose value is 
- * closest to the target from the left */
+/* LC: 34 binary_search returns the first index whose value is 
+ * closest to the target from the left, note this is different
+ * from the way std::lower_bound does. */
 
-int lowerBound(vector<int> &nums, int target) {
+int binary_search(vector<int> &nums, int target) {
     if (nums.size() == 0)
         return -1;
 
@@ -12,9 +18,7 @@ int lowerBound(vector<int> &nums, int target) {
     size_t right = nums.size()-1;
 
     while (left < right) {
-        // printf("L = %d, R = %d\n", left, right);
-            
-        // left will increase every time or right will decrease every time
+        // left must increase or right must decrease
         int mid = (left + right) / 2;
         if (nums[mid] < target) 
             left = mid + 1;
@@ -25,6 +29,7 @@ int lowerBound(vector<int> &nums, int target) {
     if (nums[left] <= target)
         return left;
 
+    // may return -1
     return left - 1;
    
 }
@@ -32,5 +37,14 @@ int lowerBound(vector<int> &nums, int target) {
 } // end namespace
 
 int main() {
-	
+    using namespace lc;            
+ 
+    vector<int> v{1, 2, 3, 6, 7, 8, 9, 13};
+    printf("Search 0 => %d\n", binary_search(v, 0));    
+    printf("Search 1 => %d\n", binary_search(v, 1));    
+    printf("Search 2 => %d\n", binary_search(v, 2));    
+    printf("Search 4 => %d\n", binary_search(v, 4));    
+    printf("Search 7 => %d\n", binary_search(v, 7));    
+    printf("Search 13 => %d\n", binary_search(v, 13));    
+    printf("Search 14 => %d\n", binary_search(v, 14));    
 }
